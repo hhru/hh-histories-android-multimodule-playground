@@ -12,12 +12,16 @@ import toothpick.InjectConstructor
 @InjectConstructor
 class PhotoPickerApi {
 
-    private val photoSelectionRelay = PublishRelay.create<PhotoSelection>()
+    private val photoSelectionRelay =
+        PublishRelay.create<PhotoSelection>()
 
-    fun photoPickerFragment(args: PhotoPickerArgs): Fragment = PhotoPickerFragment.newInstance(args)
+    fun photoPickerFragment(args: PhotoPickerArgs): Fragment =
+        PhotoPickerFragment.newInstance(args)
 
-    fun photoSelections(): Observable<PhotoSelection> = photoSelectionRelay.hide()
+    fun photoSelections(): Observable<PhotoSelection> =
+        photoSelectionRelay.hide()
 
-    internal fun postPhotoSelection(photoSelection: PhotoSelection) = photoSelectionRelay.accept(photoSelection)
+    internal fun postPhotoSelection(photoSelection: PhotoSelection) =
+        photoSelectionRelay.accept(photoSelection)
 
 }

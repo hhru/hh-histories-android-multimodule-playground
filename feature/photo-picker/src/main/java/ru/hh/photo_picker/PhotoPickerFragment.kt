@@ -25,7 +25,7 @@ internal class PhotoPickerFragment : BottomSheetDialogFragment() {
     private val di = DiFragmentPlugin(
         fragment = this,
         parentScope = { PhotoPickerFacade().featureScope },
-        scopeSuffix = { photoPickerArgs.selectionId },
+        scopeNameSuffix = { photoPickerArgs.selectionId },
         scopeModules = { arrayOf(PhotoPickerModule(photoPickerArgs)) }
     )
 

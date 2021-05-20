@@ -16,17 +16,17 @@ import toothpick.ktp.binding.bind
  *
  * @param fragment      Фрагмент, жизненный цикл которого используется для скоупа
  * @param parentScope   Предоставляет родительский скоуп (этом может быть FeatureScope или скоуп родительского фрагмента)
- * @param scopeSuffix   Дополнительный суффикс для имени скоупа при открытии одинаковых фрагментов
+ * @param scopeNameSuffix   Дополнительный суффикс для имени скоупа при открытии одинаковых фрагментов
  * @param scopeModules  Список Toothpick-модулей, которые будут предоставлены для скоупа фрагмента
  */
 class DiFragmentPlugin(
     private val fragment: Fragment,
     private val parentScope: () -> Scope,
-    private val scopeSuffix: () -> String = { "" },
+    private val scopeNameSuffix: () -> String = { "" },
     private val scopeModules: () -> Array<Module> = { emptyArray() }
 ) : LifecycleObserver {
 
-    private val scopeName by lazy { "${fragment.javaClass.name}_${scopeSuffix()}" }
+    private val scopeName by lazy { "${fragment.javaClass.name}_${scopeNameSuffix()}" }
 
     /**
      * Для каждого скоупа фрагмента создаем Disposable, который будет закрыт при уничтожении скоупа.

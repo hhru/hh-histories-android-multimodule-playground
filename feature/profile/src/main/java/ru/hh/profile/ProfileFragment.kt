@@ -26,7 +26,7 @@ internal class ProfileFragment : Fragment(R.layout.fragment_profile) {
     private val di = DiFragmentPlugin(
         fragment = this,
         parentScope = { ProfileFacade().featureScope },
-        scopeSuffix = { userProfile.id },
+        scopeNameSuffix = { userProfile.id },
         scopeModules = { arrayOf(ProfileScreenModule(userProfile)) }
     )
 

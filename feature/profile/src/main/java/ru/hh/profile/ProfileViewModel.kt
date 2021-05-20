@@ -11,7 +11,7 @@ import toothpick.InjectConstructor
 internal class ProfileViewModel(
     private val initialUserProfile: UserProfile,
     private val deps: ProfileDeps,
-    private val disposable: CompositeDisposable
+    disposable: CompositeDisposable
 ) {
 
     private val _userProfileRelay = BehaviorRelay.create<UserProfile>()

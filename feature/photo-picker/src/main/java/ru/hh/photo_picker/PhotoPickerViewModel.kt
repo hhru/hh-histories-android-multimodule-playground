@@ -19,7 +19,7 @@ internal class PhotoPickerViewModel(
         photoPickerApi.postPhotoSelection(
             PhotoSelection(
                 selectionId = photoPickerArgs.selectionId,
-                photoUrl = photo.url
+                photo = photo
             )
         )
         _closeFragmentRelay.accept(Unit)

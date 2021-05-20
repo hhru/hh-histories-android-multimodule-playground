@@ -20,6 +20,6 @@ internal class ProfileDepsImpl(
     override fun photoSelections(profileId: String): Observable<String> =
         photoPickerApi.photoSelections()
             .filter { it.selectionId == profileId }
-            .map { it.photoUrl }
+            .map { it.photo.url }
 
 }

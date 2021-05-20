@@ -1,7 +1,7 @@
 package ru.hh.photo_picker
 
 
-internal data class Photo(
+data class Photo(
     val url: String
 ) {
     companion object {
