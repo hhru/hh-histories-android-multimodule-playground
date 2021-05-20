@@ -1,0 +1,33 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+}
+
+android {
+    compileSdkVersion androidSdkVer
+    buildToolsVersion buildToolsVer
+
+    defaultConfig {
+        minSdkVersion minSdkVer
+        targetSdkVersion targetSdkVer
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation rootProject.ext.kotlin
+    implementation rootProject.ext.appCompat
+    implementation rootProject.ext.fragment
+    implementation rootProject.ext.lifecycle
+    implementation rootProject.ext.lifecycleRuntime
+    implementation rootProject.ext.material
+    implementation rootProject.ext.rx
+}

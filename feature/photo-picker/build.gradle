@@ -1,0 +1,41 @@
+plugins {
+    id 'com.android.library'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+    id 'org.jetbrains.kotlin.plugin.parcelize'
+}
+
+
+android {
+    compileSdkVersion androidSdkVer
+    buildToolsVersion buildToolsVer
+
+    defaultConfig {
+        minSdkVersion minSdkVer
+        targetSdkVersion targetSdkVer
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation rootProject.ext.kotlin
+    implementation rootProject.ext.appCompat
+    implementation rootProject.ext.fragment
+    implementation rootProject.ext.tp
+    kapt rootProject.ext.tpCompiler
+    implementation rootProject.ext.coil
+    implementation rootProject.ext.material
+    implementation rootProject.ext.rx
+    implementation rootProject.ext.rxRelay
+
+    implementation project(":core:di")
+    implementation project(":core:android-utils")
+}

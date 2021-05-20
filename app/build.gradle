@@ -1,0 +1,41 @@
+plugins {
+    id 'com.android.application'
+    id 'kotlin-android'
+    id 'kotlin-kapt'
+}
+
+android {
+    compileSdkVersion androidSdkVer
+    buildToolsVersion buildToolsVer
+
+    defaultConfig {
+        applicationId "ru.hh.multimodule"
+        minSdkVersion minSdkVer
+        targetSdkVersion targetSdkVer
+        versionCode 1
+        versionName "1.0"
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+}
+
+dependencies {
+    implementation rootProject.ext.kotlin
+    implementation rootProject.ext.appCompat
+    implementation rootProject.ext.fragment
+    implementation rootProject.ext.material
+    implementation rootProject.ext.tp
+    kapt rootProject.ext.tpCompiler
+    implementation rootProject.ext.rx
+
+    implementation project(":core:di")
+    implementation project(":feature:profile")
+    implementation project(":feature:photo-picker")
+}

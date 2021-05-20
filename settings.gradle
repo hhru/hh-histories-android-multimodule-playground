@@ -1,0 +1,9 @@
+include ":app"
+
+include ":feature:photo-picker"
+include ":feature:profile"
+
+include ":core:android-utils"
+include ":core:di"
+
+rootProject.name = "Multimodule"
