@@ -52,4 +52,10 @@ open class FeatureFacade<Deps, Api>(
     val api: Api
         get() = featureScope.getInstance(apiClass)
 
+    /**
+     * Lazy обёртка над api, чтобы не обращаться в Di каждый раз для получения api
+     */
+    val lazyApi: Lazy<Api>
+        get() = lazy { api }
+
 }
