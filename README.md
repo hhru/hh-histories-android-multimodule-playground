@@ -48,15 +48,16 @@ interface ProfileDeps {
 // в app-модуле
 @InjectConstructor
 internal class ProfileDepsImpl(
-    // для реализации зависимостей фичемодуля, может понадобиться Api другого фичемодуля
-    private val photoPickerApi: PhotoPickerApi
+    // для реализации зависимостей feature-модуля могут понадобиться зависимости из другой фичи
+    // для этого инжектим feature-фасад вместо прямого инжекта Api, чтобы избежать циклических зависимостей
+    private val photoPicker: PhotoPickerFacade
 ) : ProfileDeps {
 
     override fun photoPickerFragment(profileId: String): Fragment =
-        photoPickerApi.photoPickerFragment(PhotoPickerArgs((profileId)))
+        photoPicker.api.photoPickerFragment(PhotoPickerArgs((profileId)))
 
     override fun photoSelections(profileId: String): Observable<String> =
-        photoPickerApi.photoSelections()
+        photoPicker.api.photoSelections()
             .filter { it.selectionId == profileId }
             .map { it.photo.url }
 
@@ -64,7 +65,7 @@ internal class ProfileDepsImpl(
 
 // в app-модуле, при описании DI-байндингов:
 bind<ProfileDeps>().toClass<ProfileDepsImpl>()
-bind<PhotoPickerApi>().toProviderInstance { ProfileFacade().api }
+bind<PhotoPickerFacade>().toClass<PhotoPickerFacade>().singleton()
 ```
 
 Здесь используется вспомогательный stateless-класс `FeatureFacade`, который является точкой входа в межмодульное взаимодействие для фичи. 
@@ -90,7 +91,7 @@ class ProfileFacade : FeatureFacade<ProfileDeps, ProfileApi>(
 // Получение feature scope внутри фичи (например, для открытия скоупа фрагмента от него):
 ProfileFacade().featureScope
 
-// Получение API фичи в app-модуле (например, для последующего байндинга API в app scope):
+// Получение API фичи в app-модуле (например, для реализации DepsImpl других фич):
 ProfileFacade().api
 ```
 
@@ -139,3 +140,7 @@ internal class ProfileFragment : Fragment(R.layout.fragment_profile) {
 Но вместо методов `fun getExternalFragment(): Fragment` фичемодули могут объявлять в своих Deps метод в стиле
 `fun openExternalScreen()`. Тогда app-модуль перенаправит обработку навигации в API фичемодуля, 
 предоставляющего контейнер для навигации, где можно использовать любую навигационную библиотеку.
+
+### Thanks to
+
+[KarenkovID](https://github.com/KarenkovID) за реализацию способа усранения цииклических зависимостей между Deps и Api.

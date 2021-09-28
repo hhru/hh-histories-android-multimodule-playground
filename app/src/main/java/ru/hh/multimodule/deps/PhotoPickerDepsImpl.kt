@@ -5,7 +5,4 @@ import ru.hh.profile.api.ProfileFacade
 import toothpick.InjectConstructor
 
 @InjectConstructor
-internal class PhotoPickerDepsImpl(
-    // Демонстрация того, что циклические зависимости работают
-    private val profileFeature: ProfileFacade
-) : PhotoPickerDeps
+internal class PhotoPickerDepsImpl : PhotoPickerDeps

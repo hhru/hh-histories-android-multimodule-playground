@@ -9,18 +9,16 @@ import toothpick.InjectConstructor
 
 @InjectConstructor
 internal class ProfileDepsImpl(
-    // для реализации зависимостей фичемодуля, может понадобиться FeatureFacade другой фичи.
-    // подставляем фасад вместо api, чтобы не иметь циклических зависимостей
-    photoPickerFacade: PhotoPickerFacade
+    // для реализации зависимостей feature-модуля могут понадобиться зависимости из другой фичи
+    // для этого инжектим feature-фасад вместо прямого инжекта Api, чтобы избежать циклических зависимостей
+    private val photoPicker: PhotoPickerFacade
 ) : ProfileDeps {
 
-    private val photoPickerApi by photoPickerFacade.lazyApi
-
     override fun photoPickerFragment(profileId: String): Fragment =
-        photoPickerApi.photoPickerFragment(PhotoPickerArgs((profileId)))
+        photoPicker.api.photoPickerFragment(PhotoPickerArgs((profileId)))
 
     override fun photoSelections(profileId: String): Observable<String> =
-        photoPickerApi.photoSelections()
+        photoPicker.api.photoSelections()
             .filter { it.selectionId == profileId }
             .map { it.photo.url }
 
