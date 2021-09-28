@@ -143,4 +143,4 @@ internal class ProfileFragment : Fragment(R.layout.fragment_profile) {
 
 ### Thanks to
 
-[KarenkovID](https://github.com/KarenkovID) за реализацию способа усранения цииклических зависимостей между Deps и Api.
+[KarenkovID](https://github.com/KarenkovID) за реализацию способа устранения цииклических зависимостей между Deps и Api.
