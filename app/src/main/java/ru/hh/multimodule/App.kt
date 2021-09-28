@@ -14,7 +14,7 @@ internal class App : Application() {
     }
 
     private fun initTp() {
-        val tpConfig = Configuration().preventMultipleRootScopes()
+        val tpConfig = Configuration.forDevelopment().preventMultipleRootScopes()
         Toothpick.setConfiguration(tpConfig)
 
         // Используем rootScope Toothpick-а в качестве AppScope

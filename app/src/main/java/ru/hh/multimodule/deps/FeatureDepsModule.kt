@@ -4,6 +4,8 @@ import ru.hh.di.FeatureFacade
 import ru.hh.photo_picker.api.PhotoPickerFacade
 import ru.hh.profile.api.ProfileFacade
 import toothpick.config.Module
+import toothpick.ktp.binding.bind
+import kotlin.reflect.KClass
 
 
 /**
@@ -12,18 +14,19 @@ import toothpick.config.Module
 internal class FeatureDepsModule : Module() {
 
     init {
-        bindFeatureDeps(ProfileFacade(), ProfileDepsImpl::class.java)
-        bindFeatureDeps(PhotoPickerFacade(), PhotoPickerDepsImpl::class.java)
+        bindFeatureDeps(ProfileFacade(), ProfileDepsImpl::class)
+        bindFeatureDeps(PhotoPickerFacade(), PhotoPickerDepsImpl::class)
     }
 
-    private fun <Deps, Api, DepsImpl : Deps> bindFeatureDeps(
-        featureFacade: FeatureFacade<Deps, Api>, depsImpl: Class<DepsImpl>
+    private inline fun <reified Deps : Any, Api : Any, reified DepsImpl : Deps, reified TFeatureFacade : FeatureFacade<Deps, Api>> bindFeatureDeps(
+        featureFacade: TFeatureFacade,
+        depsImpl: KClass<DepsImpl>
     ) {
         // FeatureFacade -- абстракция над Api + Deps фичемодуля
         // Задаем связь Deps фичемодуля с DepsImpl и предоставляем Api фичемодуля
 
-        bind(featureFacade.depsClass).to(depsImpl).singleton()
-        bind(featureFacade.apiClass).toProviderInstance { featureFacade.api }.providesSingleton()
+        bind<Deps>().toClass(depsImpl).singleton()
+        bind<TFeatureFacade>().toInstance(featureFacade)
     }
 
 }
